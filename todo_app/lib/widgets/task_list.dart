@@ -12,7 +12,7 @@ class TasksList extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onLongPress: () {
-              Provider.of<TaskData>(context).taskDelete(taskData.tasks[index]);
+              taskData.taskDelete(taskData.tasks[index]);
             },
             child: TaskTile(
                 taskTitle: taskData.tasks[index].name,
