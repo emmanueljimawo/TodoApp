@@ -1,17 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/widgets/task_list.dart';
 import 'package:todo_app/screens/add_task_screen.dart';
-import 'package:todo_app/models/task.dart';
+import 'package:todo_app/models/task_data.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [];
-
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +16,9 @@ class _TasksScreenState extends State<TasksScreen> {
           Container(
             padding: EdgeInsets.only(
               left: 30.0,
-              top: 60.0,
+              top: 40.0,
               right: 30.0,
-              bottom: 30.0,
+              bottom: 20.0,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +44,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.length}',
+                  '${Provider.of<TaskData>(context).taskCount} tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -70,7 +64,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   )),
-              child: TasksList(tasks),
+              child: TasksList(),
             ),
           ),
         ],
@@ -86,12 +80,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       child: Container(
                     padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: AddTaskScreen((newTaskTitle) {
-                      setState(() {
-                        tasks.add(Task(name: newTaskTitle));
-                      });
-                      Navigator.pop(context);
-                    }),
+                    child: AddTaskScreen(),
                   )));
         },
       ),
