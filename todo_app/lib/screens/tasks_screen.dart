@@ -2,12 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/widgets/task_list.dart';
 import 'package:todo_app/screens/add_task_screen.dart';
+import 'package:todo_app/models/task.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Colors.lightGreen,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -26,7 +34,7 @@ class TasksScreen extends StatelessWidget {
                   radius: 30.0,
                   child: Icon(
                     Icons.list,
-                    color: Colors.lightBlueAccent,
+                    color: Colors.lightGreen,
                     size: 30.0,
                   ),
                 ),
@@ -42,7 +50,7 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '12 Tasks',
+                  '${tasks.length}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -62,19 +70,29 @@ class TasksScreen extends StatelessWidget {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   )),
-              child: TasksList(),
+              child: TasksList(tasks),
             ),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.lightGreen,
         child: Icon(Icons.add),
         onPressed: () {
           showModalBottomSheet(
-            context: context,
-            builder: (BuildContext context) => AddTaskScreen(),
-          );
+              context: context,
+              isScrollControlled: true,
+              builder: (BuildContext context) => SingleChildScrollView(
+                      child: Container(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: AddTaskScreen((newTaskTitle) {
+                      setState(() {
+                        tasks.add(Task(name: newTaskTitle));
+                      });
+                      Navigator.pop(context);
+                    }),
+                  )));
         },
       ),
     );
