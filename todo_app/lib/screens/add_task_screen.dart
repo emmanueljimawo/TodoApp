@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/task_data.dart';
+import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/provider/task_provider.dart';
 
 class AddTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String newTaskTitle;
+    String name;
     return Container(
       color: Color(0xff757575),
       child: Container(
@@ -29,10 +30,20 @@ class AddTaskScreen extends StatelessWidget {
               ),
             ),
             TextField(
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.black45,
+              ),
+              decoration: InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.amber,
+                ),
+              )),
               autofocus: true,
               textAlign: TextAlign.center,
               onChanged: (value) {
-                newTaskTitle = value;
+                name = value;
               },
             ),
             FlatButton(
@@ -42,7 +53,8 @@ class AddTaskScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                Provider.of<TaskData>(context).addTask(newTaskTitle);
+                Provider.of<TaskDataProvider>(context, listen: false)
+                    .addTask(Task(name: name));
                 Navigator.pop(context);
               },
             ),

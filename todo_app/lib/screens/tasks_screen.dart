@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/widgets/task_list.dart';
 import 'package:todo_app/screens/add_task_screen.dart';
-import 'package:todo_app/models/task_data.dart';
+import 'package:todo_app/provider/task_provider.dart';
 
 class TasksScreen extends StatelessWidget {
   @override
@@ -27,8 +27,8 @@ class TasksScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   radius: 30.0,
                   child: Icon(
-                    Icons.list,
-                    color: Colors.lightGreen,
+                    Icons.directions_run,
+                    color: Colors.amber,
                     size: 30.0,
                   ),
                 ),
@@ -36,7 +36,7 @@ class TasksScreen extends StatelessWidget {
                   height: 10.0,
                 ),
                 Text(
-                  'TodoApp',
+                  'Todo',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 50.0,
@@ -44,7 +44,7 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${Provider.of<TaskData>(context).taskCount} tasks',
+                  '${Provider.of<TaskDataProvider>(context).taskCount} tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -71,7 +71,10 @@ class TasksScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightGreen,
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         onPressed: () {
           showModalBottomSheet(
               context: context,
